@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import logo from '@/assets/images/logo-white.png';
-// import profileDefault from '@/assets/images/profile.png';
-// import { FaGoogle } from 'react-icons/fa';
+import profileDefault from '@/assets/images/profile.png';
+import { FaGoogle } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -161,13 +161,13 @@ const Navbar = () => {
                     role='menu'
                     aria-orientation='vertical'
                     aria-labelledby='user-menu-button'
-                    tabIndex='-1'
+                    tabIndex={-1}
                   >
                     <Link
                       href='/profile'
                       className='block px-4 py-2 text-sm text-gray-700'
                       role='menuitem'
-                      tabIndex='-1'
+                      tabIndex={-1}
                       id='user-menu-item-0'
                     >
                       Your Profile
@@ -176,7 +176,7 @@ const Navbar = () => {
                       href='/properties/saved'
                       className='block px-4 py-2 text-sm text-gray-700'
                       role='menuitem'
-                      tabIndex='-1'
+                      tabIndex={-1}
                       id='user-menu-item-2'
                     >
                       Saved Properties
@@ -184,7 +184,7 @@ const Navbar = () => {
                     <button
                       className='block px-4 py-2 text-sm text-gray-700'
                       role='menuitem'
-                      tabIndex='-1'
+                      tabIndex={-1}
                       id='user-menu-item-2'
                     >
                       Sign Out
