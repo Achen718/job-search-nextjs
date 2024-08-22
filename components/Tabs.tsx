@@ -10,6 +10,8 @@ import {
 
 export function UnderlineTabs() {
   const [activeTab, setActiveTab] = useState('html');
+
+  //   dummy data
   const data = [
     {
       label: 'HTML',
@@ -30,6 +32,7 @@ export function UnderlineTabs() {
       <TabsHeader
         className='rounded-none border-b border-blue-gray-50 bg-transparent p-0 justify-center'
         indicatorProps={{
+          id: 'tabs-header-indicator',
           className:
             'bg-transparent border-b-4 border-blue-500 shadow-none rounded-none',
         }}
@@ -40,14 +43,29 @@ export function UnderlineTabs() {
             value={value}
             onClick={() => setActiveTab(value)}
             className={
-              (activeTab === value ? 'text-gray-900' : '') + ' max-w-72'
+              (activeTab === value ? 'text-gray-900 font-bold' : '') +
+              ' max-w-72 [&_#tabs-header-indicator]:!translate-x-0'
             }
           >
             {label}
           </Tab>
         ))}
       </TabsHeader>
-      <TabsBody>
+      <TabsBody
+        className='animate-none'
+        animate={{
+          mount: {
+            transition: {
+              duration: 0,
+            },
+          },
+          unmount: {
+            transition: {
+              duration: 0,
+            },
+          },
+        }}
+      >
         {data.map(({ value, desc }) => (
           <TabPanel key={value} value={value}>
             {desc}
