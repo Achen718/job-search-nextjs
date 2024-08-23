@@ -1,5 +1,8 @@
 'use client';
 import { useState } from 'react';
+import RecentJobListing from './RecentJobListing';
+import SuggestedList from './SuggestedList';
+import { tabItems } from '../constants/index';
 import {
   Tabs,
   TabsHeader,
@@ -8,25 +11,13 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 
-export function UnderlineTabs() {
-  const [activeTab, setActiveTab] = useState('html');
+const UnderlineTabs = () => {
+  const [activeTab, setActiveTab] = useState<string>('Recent');
 
-  //   dummy data
-  const data = [
-    {
-      label: 'HTML',
-      value: 'html',
-      desc: `It really matters and then like it really doesn't matter.
-      What matters is the people who are sparked by it. And the people 
-      who are like offended by it, it doesn't matter.`,
-    },
-    {
-      label: 'React',
-      value: 'react',
-      desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
-    },
-  ];
+  const TabContent = ({ value }: { value: string }) => {
+    return value === 'Recent' ? <RecentJobListing /> : <SuggestedList />;
+  };
+
   return (
     <Tabs value={activeTab}>
       <TabsHeader
@@ -37,7 +28,7 @@ export function UnderlineTabs() {
             'bg-transparent border-b-4 border-blue-500 shadow-none rounded-none',
         }}
       >
-        {data.map(({ label, value }) => (
+        {tabItems.map(({ label, value }) => (
           <Tab
             key={value}
             value={value}
@@ -52,7 +43,7 @@ export function UnderlineTabs() {
         ))}
       </TabsHeader>
       <TabsBody
-        className='animate-none'
+        className='mx-auto max-w-7xl sm:px-4 lg:px-6 text-center'
         animate={{
           mount: {
             transition: {
@@ -66,12 +57,14 @@ export function UnderlineTabs() {
           },
         }}
       >
-        {data.map(({ value, desc }) => (
+        {tabItems.map(({ value }) => (
           <TabPanel key={value} value={value}>
-            {desc}
+            <TabContent value={value} />
           </TabPanel>
         ))}
       </TabsBody>
     </Tabs>
   );
-}
+};
+
+export default UnderlineTabs;

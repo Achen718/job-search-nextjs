@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import logo from '@/assets/images/logo-white.png';
 import profileDefault from '@/assets/images/profile.png';
+import { navLinks } from '@/constants';
 import { FaGoogle } from 'react-icons/fa';
 
 const Navbar = () => {
@@ -51,30 +52,24 @@ const Navbar = () => {
             {/* <!-- Logo --> */}
             <Link className='flex flex-shrink-0 items-center' href='/'>
               <Image className='h-10 w-auto' src={logo} alt='MyJobSearch' />
-
               <span className='hidden md:block text-white text-2xl font-bold ml-2'>
                 MyJobSearch
               </span>
             </Link>
-            {/* <!-- Desktop Menu Hidden below md screens --> */}
+            {/* <!-- Desktop Menu --> */}
             <div className='hidden md:ml-6 md:block'>
               <div className='flex space-x-2'>
-                <Link
-                  href='/'
-                  className={`${
-                    pathname === '/' ? 'bg-black' : ''
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
-                >
-                  Home
-                </Link>
-                <Link
-                  href='/salaries'
-                  className={`${
-                    pathname === '/jobs' ? 'bg-black' : ''
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
-                >
-                  Find salaries
-                </Link>
+                {navLinks.map((link, index) => (
+                  <Link
+                    key={index}
+                    href={link.route}
+                    className={`${
+                      pathname === link.route ? 'bg-black' : ''
+                    } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
@@ -142,7 +137,7 @@ const Navbar = () => {
                   </button>
                 </div>
 
-                {/* <!-- Profile dropdown --> */}
+                {/* <!-- Profile menu --> */}
                 {isProfileMenuOpen && (
                   <div
                     id='user-menu'
@@ -190,22 +185,17 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div id='mobile-menu'>
           <div className='space-y-1 px-2 pb-3 pt-2'>
-            <Link
-              href='/'
-              className={`${
-                pathname === '/' ? 'bg-black' : ''
-              } text-white block rounded-md px-3 py-2 text-base font-medium`}
-            >
-              Home
-            </Link>
-            <Link
-              href='/jobs'
-              className={`${
-                pathname === '/jobs' ? 'bg-black' : ''
-              } text-white block rounded-md px-3 py-2 text-base font-medium`}
-            >
-              Jobs
-            </Link>
+            {navLinks.map((link, index) => (
+              <Link
+                key={index}
+                href={link.route}
+                className={`${
+                  pathname === link.route ? 'bg-black' : ''
+                } text-white block rounded-md px-3 py-2 text-base font-medium`}
+              >
+                {link.name}
+              </Link>
+            ))}
             {!isLoggedIn && (
               <button className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5'>
                 <i className='fa-brands fa-google mr-2'></i>
