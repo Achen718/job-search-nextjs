@@ -15,6 +15,9 @@ const config: Config = withMT({
       gridTemplateColumns: {
         '70/30': '70% 28%',
       },
+      width: {
+        w70: '70%',
+      },
     },
   },
   plugins: [],

@@ -1,11 +1,11 @@
 import Hero from '@/components/Hero';
-import UnderlineTabs from '@/components/Tabs';
+import JobSearchTabs from '@/components/JobSearchTabs';
 
 const HomePage = () => {
   return (
     <>
       <Hero />
-      <UnderlineTabs />
+      <JobSearchTabs />
     </>
   );
 };

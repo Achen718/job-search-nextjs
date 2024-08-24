@@ -1,25 +1,15 @@
-interface ITabItems {
-  label: string;
-  value: string;
-}
-
-interface INavLinks {
-  name: string;
-  route: string;
-}
-
-export const tabItems: ITabItems[] = [
-  {
-    label: 'Recent',
-    value: 'Recent',
-  },
+export const tabItems = [
   {
     label: 'Suggested',
     value: 'Suggested',
   },
+  {
+    label: 'Recent',
+    value: 'Recent',
+  },
 ];
 
-export const navLinks: INavLinks[] = [
+export const navLinks = [
   { name: 'Home', route: '/' },
   { name: 'Find Salaries', route: '/salaries' },
 ];

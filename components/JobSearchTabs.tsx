@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import RecentJobListing from './RecentJobListing';
-import SuggestedList from './SuggestedList';
+import SuggestedJobCard from './SuggestedTab';
+import RecentSearchTab from './RecentTab';
 import { tabItems } from '../constants/index';
 import {
   Tabs,
@@ -11,11 +11,16 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 
-const UnderlineTabs = () => {
-  const [activeTab, setActiveTab] = useState<string>('Recent');
+interface ITabItems {
+  label: string;
+  value: string;
+}
 
-  const TabContent = ({ value }: { value: string }) => {
-    return value === 'Recent' ? <RecentJobListing /> : <SuggestedList />;
+const JobSearchTabs = () => {
+  const [activeTab, setActiveTab] = useState<string>('Suggested');
+
+  const TabContent = ({ value }: ITabItems) => {
+    return value === 'Recent' ? <RecentSearchTab /> : <SuggestedJobCard />;
   };
 
   return (
@@ -67,4 +72,4 @@ const UnderlineTabs = () => {
   );
 };
 
-export default UnderlineTabs;
+export default JobSearchTabs;
