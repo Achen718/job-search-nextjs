@@ -9,11 +9,15 @@ import {
 import JobCard from './JobCard';
 import JobDetails from './JobDetails';
 import jobs from '@/jobs.json';
+import { usePathname } from 'next/navigation';
 
 const SuggestedJobCard = () => {
+  const currentPath = usePathname();
   // create a recent list of jobs viewed local storage or redux persist?
-  const recentJobs = jobs.slice(0, 3);
-  const defaultDescription = recentJobs[0].id;
+
+  // only on homepage show 3 recent jobs
+  const recentJobs = currentPath === '/' ? jobs.slice(0, 3) : jobs;
+  const defaultJob = recentJobs[0].id;
   // tab header classnames
   const tabHeaderId = [
     '[&_#tab-header-suggested]:!translate-x-0',
@@ -24,12 +28,11 @@ const SuggestedJobCard = () => {
 
   return (
     <section>
-      <Tabs
-        value={defaultDescription}
-        orientation='vertical'
-        className='bg-none'
-      >
-        <TabsHeader indicatorProps={{ id: 'tab-header-suggested' }}>
+      <Tabs value={defaultJob} orientation='vertical' className='bg-none'>
+        <TabsHeader
+          indicatorProps={{ id: 'tab-header-suggested' }}
+          className='p-2'
+        >
           {recentJobs.map((job) => (
             <Tab
               key={job.id}

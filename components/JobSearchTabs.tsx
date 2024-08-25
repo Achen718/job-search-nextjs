@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import SuggestedJobCard from './SuggestedTab';
 import RecentSearchTab from './RecentTab';
-import { tabItems } from '../constants/index';
+import { homeTabItems } from '../constants/index';
 import {
   Tabs,
   TabsHeader,
@@ -33,7 +33,7 @@ const JobSearchTabs = () => {
             'bg-transparent border-b-4 border-blue-500 shadow-none rounded-none',
         }}
       >
-        {tabItems.map(({ label, value }) => (
+        {homeTabItems.map(({ label, value }) => (
           <Tab
             key={value}
             value={value}
@@ -62,7 +62,7 @@ const JobSearchTabs = () => {
           },
         }}
       >
-        {tabItems.map(({ value }) => (
+        {homeTabItems.map(({ value }) => (
           <TabPanel key={value} value={value}>
             <TabContent value={value} />
           </TabPanel>

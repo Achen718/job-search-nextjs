@@ -1,4 +1,4 @@
-export const tabItems = [
+export const homeTabItems = [
   {
     label: 'Suggested',
     value: 'Suggested',
