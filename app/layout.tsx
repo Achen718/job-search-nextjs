@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { EdgeStoreProvider } from '@/lib/edgestore';
 import '@/assets/styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -17,9 +18,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
       <body className={inter.className}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <EdgeStoreProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </EdgeStoreProvider>
       </body>
     </html>
   );
