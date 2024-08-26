@@ -2,10 +2,12 @@ export const homeTabItems = [
   {
     label: 'Suggested',
     value: 'Suggested',
+    id: 1,
   },
   {
     label: 'Recent',
     value: 'Recent',
+    id: 2,
   },
 ];
 

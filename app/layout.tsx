@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'My Job Search',
   keywords:
     'job search, jobs, search engine for jobs, job search engine, job listings, search jobs, career, employment, work, find jobs',
-  description: 'Personal Job Finder',
+  description: 'Job Board',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

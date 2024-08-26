@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-tailwind/react';
 
+// add search context
 const recentSearches = [
   {
     title: 'Software Engineer 1',

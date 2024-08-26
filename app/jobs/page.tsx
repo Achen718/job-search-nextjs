@@ -4,6 +4,7 @@ const JobsPage = () => {
   return (
     <section>
       <div>
+        {/* add job filters */}
         <SuggestedJobCard />
       </div>
     </section>

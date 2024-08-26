@@ -11,15 +11,11 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 
-interface ITabItems {
-  label: string;
-  value: string;
-}
-
 const JobSearchTabs = () => {
   const [activeTab, setActiveTab] = useState<string>('Suggested');
 
-  const TabContent = ({ value }: ITabItems) => {
+  // refactor usecontext?
+  const TabContent = ({ value }: { value: string }) => {
     return value === 'Recent' ? <RecentSearchTab /> : <SuggestedJobCard />;
   };
 
