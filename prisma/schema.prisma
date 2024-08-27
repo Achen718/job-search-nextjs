@@ -9,22 +9,13 @@ datasource db {
 
 model JobPosting {
   id             String   @id @default(uuid())
-  name           String
+  title          String
   description    String
   salaryMin      Float?
   salaryMax      Float?
   location       String
-  author         String
   img            String?
   employmentType String?
   createdAt      DateTime @default(now())
-  company        Company  @relation(fields: [companyId], references: [id])
-  companyId      String
-}
-
-model Company {
-  id          String       @id @default(uuid())
-  name        String
-  description String
-  jobs        JobPosting[]
+  author         String
 }

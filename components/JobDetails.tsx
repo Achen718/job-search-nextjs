@@ -21,7 +21,7 @@ const JobDetails = ({ job }: JobProps) => {
           ${job.salary.min}k - ${job.salary.max}k {job.type}
         </Typography>
         <Link
-          href={`/jobs/${job.id}`}
+          href={'/'}
           className='h-[36px] bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-center text-sm'
         >
           Apply now
