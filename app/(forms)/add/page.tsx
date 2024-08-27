@@ -2,10 +2,12 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { useEdgeStore } from '@/lib/edgestore';
-import clsx from 'clsx';
 import { addJob, type FormData } from './actions/addJob';
 
 const CreateJobForm = () => {
+  const [file, setFile] = useState<File>();
+  const { edgestore } = useEdgeStore();
+
   const {
     register,
     setValue,
@@ -23,14 +25,33 @@ const CreateJobForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    await addJob(data);
-    reset();
+  const uploadImage = async () => {
+    if (file) {
+      const res = await edgestore.publicFiles.upload({
+        file,
+      });
+      // you can run some server action or api here
+      // to add the necessary data to your database
+      setValue('img', res.url);
+    }
   };
 
+  useEffect(() => {
+    if (file) {
+      uploadImage();
+    }
+  }, [file]);
+
+  const onSubmit = handleSubmit(async (data) => {
+    await addJob(data);
+    reset();
+  });
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className='text-3xl text-center font-semibold mb-6'>Add Property</h2>
+    <form onSubmit={onSubmit}>
+      <h2 className='text-3xl text-center font-semibold mb-6'>
+        Add Your Job Post
+      </h2>
       <div className='mb-4'>
         <label htmlFor='title' className='block text-gray-700 font-bold mb-2'>
           Job Title
@@ -38,7 +59,10 @@ const CreateJobForm = () => {
         <input
           type='text'
           id='title'
-          className='border rounded w-full py-2 px-3 mb-2'
+          className={
+            (errors.title && 'ring-red-700') +
+            ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+          }
           placeholder='eg. Software Engineer, Product Manager, etc.'
           {...register('title', { required: true })}
         />
@@ -52,14 +76,17 @@ const CreateJobForm = () => {
         </label>
         <select
           id='employmentType'
-          className='border rounded w-full py-2 px-3'
+          className={
+            (errors.employmentType && 'ring-red-700') +
+            ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+          }
           {...register('employmentType', {
             required: true,
           })}
         >
           <option value='Part Time'>Part-Time</option>
           <option value='Full Time'>Full-Time</option>
-          <option value='Temporary'>Temp</option>
+          <option value='Temporary'>Contract/Temp</option>
         </select>
       </div>
       <div className='mb-4'>
@@ -72,7 +99,7 @@ const CreateJobForm = () => {
         <textarea
           id='description'
           {...register('description')}
-          className='border rounded w-full py-2 px-3'
+          className='border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
           rows={4}
           placeholder='Add Job Description. eg. requirements, responsibiles'
         ></textarea>
@@ -83,8 +110,11 @@ const CreateJobForm = () => {
         <input
           type='text'
           id='location'
-          {...register('location')}
-          className='border rounded w-full py-2 px-3 mb-2'
+          {...register('location', { required: true })}
+          className={
+            (errors.location && 'ring-red-700') +
+            ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+          }
           placeholder='location'
         />
       </div>
@@ -98,7 +128,10 @@ const CreateJobForm = () => {
             type='text'
             id='author'
             {...register('author', { required: true })}
-            className='border rounded w-full py-2 px-3'
+            className={
+              (errors.author && 'ring-red-700') +
+              ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+            }
           />
         </div>
         <div className='w-full sm:w-1/3 px-2'>
@@ -111,7 +144,10 @@ const CreateJobForm = () => {
           <input
             type='number'
             id='salaryMin'
-            className='border rounded w-full py-2 px-3'
+            className={
+              (errors.salaryMin && 'ring-red-700') +
+              ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+            }
             {...register('salaryMin', { required: true, min: 0 })}
           />
         </div>
@@ -125,7 +161,10 @@ const CreateJobForm = () => {
           <input
             type='number'
             id='salaryMax'
-            className='border rounded w-full py-2 px-3'
+            className={
+              (errors.salaryMax && 'ring-red-700') +
+              ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+            }
             {...register('salaryMax', { required: true, min: 0 })}
           />
         </div>
@@ -136,11 +175,13 @@ const CreateJobForm = () => {
         </label>
         <input
           type='file'
-          id='img'
-          className='border rounded w-full py-2 px-3'
-          accept='image/*'
-          {...register('img')}
+          id='file'
+          className='border-0 rounded w-full py-2 px-3'
+          onChange={(e) => {
+            setFile(e.target.files?.[0]);
+          }}
         />
+        <input type='hidden' id='img' {...register('img')} />
       </div>
 
       <div>

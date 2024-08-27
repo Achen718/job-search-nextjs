@@ -28,5 +28,5 @@ export async function addJob(formData: FormData) {
     },
   });
 
-  revalidatePath('/create');
+  revalidatePath('/add');
 }
