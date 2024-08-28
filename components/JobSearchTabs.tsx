@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import SuggestedJobCard from './SuggestedTab';
+import SearchSuggestions from './SearchSuggestions';
 import RecentSearchTab from './RecentTab';
 import { homeTabItems } from '../constants/index';
 import {
@@ -10,13 +11,19 @@ import {
   Tab,
   TabPanel,
 } from '@material-tailwind/react';
+import { prisma } from '@/lib/prisma';
 
 const JobSearchTabs = () => {
   const [activeTab, setActiveTab] = useState<string>('Suggested');
 
+  const suggestedJobs = async () => {
+    await prisma.jobPosting.findMany({});
+  };
+
   // refactor usecontext?
   const TabContent = ({ value }: { value: string }) => {
-    return value === 'Recent' ? <RecentSearchTab /> : <SuggestedJobCard />;
+    // return value === 'Recent' ? <RecentSearchTab /> : <SuggestedJobCard />;
+    return value === 'Recent' ? <RecentSearchTab /> : <SearchSuggestions />;
   };
 
   return (

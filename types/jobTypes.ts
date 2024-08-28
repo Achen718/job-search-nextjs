@@ -1,19 +1,14 @@
 export interface JobType {
   id: string;
   title: string;
-  type: string;
-  description: string;
+  img: string | null;
+  author: string;
+  salaryMin: number | null;
+  salaryMax: number | null;
   location: string;
-  salary: {
-    min: number;
-    max: number;
-  };
-  company: {
-    name: string;
-    description: string;
-    contactEmail: string;
-    contactPhone: string;
-  };
+  description: string;
+  employmentType: string | null;
+  createdAt: Date;
 }
 
 export interface JobProps {

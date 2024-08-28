@@ -1,11 +1,18 @@
-import SuggestedJobCard from '../../components/SuggestedTab';
+import SearchResults from '../../components/SearchResults';
+import { prisma } from '@/lib/prisma';
+import Job from '@/components/Job';
+import JobStoreProvider from '../StoreProvider';
 
-const JobsPage = () => {
+const JobsPage = async () => {
+  const jobs = await prisma.jobPosting.findMany({});
   return (
     <section>
       <div>
-        {/* add job filters */}
-        <SuggestedJobCard />
+        <JobStoreProvider jobs={jobs}>
+          {/* add job filters */}
+          {/* <SearchResults jobs={jobs} /> */}
+          <Job />
+        </JobStoreProvider>
       </div>
     </section>
   );

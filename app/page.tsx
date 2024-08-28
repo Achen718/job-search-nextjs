@@ -1,14 +1,14 @@
+'use client';
 import Hero from '@/components/Hero';
 import JobSearchTabs from '@/components/JobSearchTabs';
-import { Prisma } from '@prisma/client';
+import JobStoreProvider from './StoreProvider';
 
 const HomePage = () => {
-  // const jobs = await prisma.jobPosting.findMany({});
   return (
-    <>
+    <JobStoreProvider>
       <Hero />
       <JobSearchTabs />
-    </>
+    </JobStoreProvider>
   );
 };
 

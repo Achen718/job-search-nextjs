@@ -9,7 +9,7 @@ const JobDetails = ({ job }: JobProps) => {
       <CardBody className='p-2'>
         {/* set header */}
         {/* icon */}
-        <Typography>{job.company.name}</Typography>
+        <Typography>{job.author}</Typography>
         <Typography variant='h6' color='blue-gray' className='mb-2'>
           {job.title}
         </Typography>
@@ -18,7 +18,7 @@ const JobDetails = ({ job }: JobProps) => {
         </Typography>
         {/* add icons */}
         <Typography variant='h6' color='blue-gray' className='mb-2'>
-          ${job.salary.min}k - ${job.salary.max}k {job.type}
+          ${job.salaryMin}k - ${job.salaryMax}k {job.employmentType}
         </Typography>
         <Link
           href={'/'}
@@ -35,7 +35,6 @@ const JobDetails = ({ job }: JobProps) => {
         </button>
         <div className='border border-gray-100 mb-5 mt-2'></div>
         <Typography>{job.description}</Typography>
-        <Typography>{job.company.description}</Typography>
         {/* set conditional for details */}
       </CardBody>
     </Card>
