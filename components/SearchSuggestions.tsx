@@ -8,15 +8,15 @@ const SearchSuggestions = () => {
     setInputValue(event.target.value);
   };
 
-  useEffect(() => {
-    if (inputValue) {
-      // Simulate an API call
-      fetch(`https://api.example.com/search?q=${inputValue}`)
-        .then((response) => response.json())
-        .then((data) => setSearchResults(data.results))
-        .catch((error) => console.error('Error fetching data:', error));
-    }
-  }, [inputValue]);
+  // useEffect(() => {
+  //   if (inputValue) {
+  //     // Simulate an API call
+  //     fetch(`https://api.example.com/search?q=${inputValue}`)
+  //       .then((response) => response.json())
+  //       .then((data) => setSearchResults(data.results))
+  //       .catch((error) => console.error('Error fetching data:', error));
+  //   }
+  // }, [inputValue]);
 
   return (
     <div>

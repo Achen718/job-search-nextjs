@@ -15,8 +15,6 @@ interface SuggestedProps {
 }
 
 const SearchResults = ({ jobs }: SuggestedProps) => {
-  console.log(jobs);
-
   // create a recent list of jobs viewed local storage or redux persist?
 
   // first job listing as default active tab

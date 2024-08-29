@@ -7,6 +7,8 @@ import {
   IconButton,
   Typography,
 } from '@material-tailwind/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/lib/store';
 
 // add search context
 const recentSearches = [

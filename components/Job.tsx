@@ -1,18 +1,18 @@
 'use client';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '@/lib/store';
-import { formatPostedDate } from '@/utils/formatDate';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { RootState } from '@/lib/store';
+import { setFilteredJobs } from '../lib/features/filteredJobs/filteredJobsSlice';
+import { JobType } from '@/types/jobTypes';
 
-const JobComponent = () => {
-  const filteredJobs = useSelector((state: RootState) => state.filteredJobs);
-  filteredJobs.map((job) => {
-    console.log(formatPostedDate(job.createdAt));
-  });
-
+interface testProp {
+  jobs: JobType[];
+}
+const JobComponent = ({ jobs }: testProp) => {
   return (
     <div>
       <ul>
-        {filteredJobs.map((job, index) => (
+        filter jobs based on search
+        {jobs.map((job, index) => (
           <li key={index}>{job.title}</li>
         ))}
       </ul>
