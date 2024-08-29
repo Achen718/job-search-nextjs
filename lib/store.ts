@@ -1,27 +1,35 @@
+'use client';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { filteredJobsSlice } from './features/filteredJobs/filteredJobsSlice';
+import filteredJobsSlice from './features/filteredJobs/filteredJobsSlice';
 import recentSearchSlice from './features/recentSearches/recentSearchSlice';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-
-const persistConfig = {
-  key: 'persist',
-  storage,
-};
+import storage from './storage';
+// import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
   recentSearch: recentSearchSlice,
 });
 
-const makeConfiguredStore = () => {
-  configureStore({
-    reducer: {
-      filteredJobs: filteredJobsSlice.reducer,
-      recentSearch: rootReducer,
-    },
-  });
+const persistConfig = {
+  key: 'persist',
+  storage,
+  version: 1,
 };
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const makeConfiguredStore = () =>
+  configureStore({
+    reducer: {
+      filteredJobs: filteredJobsSlice,
+      recentSearch: persistedReducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
+  });
+// todos: Add persistor options to flush
 export const makeStore = () => {
   const isServer = typeof window === 'undefined';
   if (isServer) {
@@ -30,6 +38,12 @@ export const makeStore = () => {
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     let store: any = configureStore({
       reducer: persistedReducer,
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+          },
+        }),
     });
 
     store.__persistor = persistStore(store);

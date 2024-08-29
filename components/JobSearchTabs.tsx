@@ -16,10 +16,6 @@ import { prisma } from '@/lib/prisma';
 const JobSearchTabs = () => {
   const [activeTab, setActiveTab] = useState<string>('Suggested');
 
-  const suggestedJobs = async () => {
-    await prisma.jobPosting.findMany({});
-  };
-
   // refactor usecontext?
   const TabContent = ({ value }: { value: string }) => {
     // return value === 'Recent' ? <RecentSearchTab /> : <SuggestedJobCard />;

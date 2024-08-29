@@ -20,8 +20,6 @@ const JobsPage = async ({
     },
   });
 
-  console.log(jobs);
-
   return (
     <section>
       <div>

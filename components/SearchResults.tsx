@@ -15,10 +15,8 @@ interface SuggestedProps {
 }
 
 const SearchResults = ({ jobs }: SuggestedProps) => {
-  // create a recent list of jobs viewed local storage or redux persist?
-
   // first job listing as default active tab
-  const defaultJob = jobs[0].id;
+  const defaultCard = jobs && jobs.length > 0 ? jobs[0].id : null;
   // tab header classnames
   const tabHeaderId = [
     '[&_#tab-header-suggested]:!translate-x-0',
@@ -29,44 +27,50 @@ const SearchResults = ({ jobs }: SuggestedProps) => {
 
   return (
     <section>
-      <Tabs value={defaultJob} orientation='vertical'>
-        <TabsHeader
-          indicatorProps={{ id: 'tab-header-suggested' }}
-          className='p-2'
-        >
-          {jobs.map((job) => (
-            <Tab
-              key={job.id}
-              value={job.id}
-              className={tabHeaderId.join(' ') + ' block p-0 mb-2 last:mb-0'}
-            >
-              <JobCard key={job.id} job={job} />
-            </Tab>
-          ))}
-        </TabsHeader>
-        <TabsBody
-          className='w-w70'
-          animate={{
-            mount: {
-              transition: {
-                duration: 0,
+      {defaultCard ? (
+        <Tabs value={defaultCard} orientation='vertical'>
+          <TabsHeader
+            indicatorProps={{ id: 'tab-header-suggested' }}
+            className='p-2'
+          >
+            {jobs.map((job) => (
+              <Tab
+                key={job.id}
+                value={job.id}
+                className={tabHeaderId.join(' ') + ' block p-0 mb-2 last:mb-0'}
+              >
+                <JobCard key={job.id} job={job} />
+              </Tab>
+            ))}
+          </TabsHeader>
+          <TabsBody
+            className='w-w70'
+            animate={{
+              mount: {
+                transition: {
+                  duration: 0,
+                },
               },
-            },
-            unmount: {
-              transition: {
-                duration: 0,
+              unmount: {
+                transition: {
+                  duration: 0,
+                },
               },
-            },
-          }}
-        >
-          {jobs.map((job) => (
-            <TabPanel key={job.id} value={job.id} className='tab-panel'>
-              {/* update job card details */}
-              <JobDetails key={job.id} job={job} />
-            </TabPanel>
-          ))}
-        </TabsBody>
-      </Tabs>
+            }}
+          >
+            {jobs.map((job) => (
+              <TabPanel key={job.id} value={job.id} className='tab-panel'>
+                {/* update job card details */}
+                <JobDetails key={job.id} job={job} />
+              </TabPanel>
+            ))}
+          </TabsBody>
+        </Tabs>
+      ) : (
+        <div className='text-center text-blue-500'>
+          <p>No jobs found</p>
+        </div>
+      )}
     </section>
   );
 };
