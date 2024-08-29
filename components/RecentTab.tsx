@@ -1,3 +1,4 @@
+'use client';
 import {
   List,
   ListItem,
@@ -7,7 +8,7 @@ import {
   IconButton,
   Typography,
 } from '@material-tailwind/react';
-import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { RootState } from '@/lib/store';
 
 // add search context
@@ -35,6 +36,9 @@ const recentSearches = [
 ];
 
 const RecentSearchTab = () => {
+  const searched = useAppSelector((state) => state.recentSearch.recentSearches);
+  console.log(searched);
+
   return (
     <Card className='max-w-2xl mx-auto'>
       <CardBody>
@@ -44,14 +48,14 @@ const RecentSearchTab = () => {
           </Typography>
         </div>
         <div className='divide-y divide-gray-200'>
-          {recentSearches.map(({ title, location }, index) => (
+          {searched.map(({ jobTitle, jobLocation }, index) => (
             <div
               key={index}
               className='flex items-center justify-between pb-3 pt-3 last:pb-0'
             >
               <List className='w-full'>
                 <ListItem ripple={false} className='py-1 pr-1 pl-4'>
-                  {title} {location}
+                  {jobTitle} {jobLocation}
                   <ListItemSuffix>
                     <IconButton variant='text' color='blue-gray'>
                       <svg

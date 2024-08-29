@@ -36,4 +36,6 @@ export const recentSearchSlice = createSlice({
 export const { setJobTitle, setJobLocation, addSearch } =
   recentSearchSlice.actions;
 
+export const searched = (state: RootState) => state.recentSearches;
+
 export default recentSearchSlice.reducer;

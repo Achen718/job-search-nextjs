@@ -10,7 +10,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  user: recentSearchSlice,
+  recentSearch: recentSearchSlice,
 });
 
 const makeConfiguredStore = () => {

@@ -23,7 +23,6 @@ export default function JobStoreProvider({
     //   createdAt: new Date(job.createdAt).toISOString(),
     // }));
   }
-  console.log(storeRef.current.__persistor);
 
   return (
     <Provider store={storeRef.current}>
