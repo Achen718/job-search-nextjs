@@ -36,7 +36,7 @@ const SearchForm = () => {
   });
 
   const handleSearch = handleSubmit(() => {
-    const query = `?jobTitle=${jobTitle}&location=${jobLocation}`;
+    const query = `?jobTitle=${jobTitle}&jobLocation=${jobLocation}`;
     router.push(`/jobs${query}`);
 
     dispatch(setJobTitle(jobTitle));

@@ -10,18 +10,25 @@ import {
 } from '@material-tailwind/react';
 import { removeSearch } from '../lib/features/recentSearches/recentSearchSlice';
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { FaTrash } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 const RecentSearchTab = () => {
   const searched = useAppSelector((state) => state.recentSearch.recentSearches);
   const dispatch = useAppDispatch();
 
+  const router = useRouter();
   interface RecentSearch {
     jobTitle: string;
     jobLocation: string;
   }
   const handleRemoveSearch = (index: number) => {
     dispatch(removeSearch(index));
+  };
+
+  const searchRecents = (jobTitle: string, jobLocation: string) => {
+    const query = `?jobTitle=${jobTitle}&jobLocation=${jobLocation}`;
+    router.push(`/jobs${query}`);
   };
 
   return (
@@ -47,14 +54,19 @@ const RecentSearchTab = () => {
                       ripple={false}
                       className='py-1 pr-1 pl-4 text-slate-600'
                     >
-                      {jobTitle} in {jobLocation}
+                      <button
+                        className='w-full text-left'
+                        onClick={() => searchRecents(jobTitle, jobLocation)}
+                      >
+                        {jobTitle} in {jobLocation}
+                      </button>
                       <ListItemSuffix>
                         <IconButton
                           variant='text'
                           color='blue-gray'
                           onClick={() => handleRemoveSearch(index)}
                         >
-                          <TrashIcon className='h-5 w-5  text-slate-600' />
+                          <FaTrash className='h-5 w-5  text-slate-600' />
                         </IconButton>
                       </ListItemSuffix>
                     </ListItem>

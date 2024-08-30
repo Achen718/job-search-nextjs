@@ -9,47 +9,28 @@ import {
 } from '@material-tailwind/react';
 import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { navLinks } from '../constants/index';
 
 function NavList() {
   return (
+    // todo: Map nav links
     <ul className='my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6'>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium text-base'
-      >
-        <Link
-          href='/'
-          className='flex items-center hover:text-blue-600 transition-colors'
+      {navLinks.map(({ name, route }, index) => (
+        <Typography
+          key={index}
+          as='li'
+          variant='small'
+          color='blue-gray'
+          className='p-1 font-medium text-base'
         >
-          Home
-        </Link>
-      </Typography>
-      <Typography as='li' color='blue-gray' className='p-1 font-medium'>
-        <Link
-          href='/salaries'
-          className='flex items-center hover:text-blue-600 transition-colors'
-        >
-          Salaries
-        </Link>
-      </Typography>
-      <Typography as='li' color='blue-gray' className='p-1 font-medium'>
-        <Link
-          href='/jobs'
-          className='flex items-center hover:text-blue-600 transition-colors'
-        >
-          Jobs
-        </Link>
-      </Typography>
-      <Typography as='li' color='blue-gray' className='p-1 font-medium'>
-        <a
-          href='#'
-          className='flex items-center hover:text-blue-600 transition-colors'
-        >
-          About Me
-        </a>
-      </Typography>
+          <Link
+            href={route}
+            className='flex items-center hover:text-white hover:bg-slate-600 transition-colors'
+          >
+            {name}
+          </Link>
+        </Typography>
+      ))}
     </ul>
   );
 }

@@ -13,6 +13,7 @@ export const homeTabItems = [
 
 export const navLinks = [
   { name: 'Home', route: '/' },
-  { name: 'Find Salaries', route: '/salaries' },
-  { name: 'Post a job', route: '/add' },
+  { name: 'Salaries', route: '/salaries' },
+  { name: 'Jobs', route: '/jobs' },
+  { name: 'About', route: '/' },
 ];
