@@ -49,7 +49,7 @@ const SearchForm = () => {
       onSubmit={handleSearch}
       className='mt-3 mx-auto max-w-7xl w-full flex flex-col md:flex-row items-center'
     >
-      <div className='w-full md:w-2/4 md:pr-2 mb-4 md:mb-0'>
+      <div className='w-full md:w-2/5 md:pr-2 mb-4 md:mb-0'>
         <label htmlFor='jobTitle' className='sr-only'>
           Job Title
         </label>
@@ -59,7 +59,7 @@ const SearchForm = () => {
           placeholder='Enter Keywords or Location'
           className={
             (errors.jobTitle && 'ring-red-700') +
-            ' w-full px-4 py-3 rounded-lg text-gray-800 border-0 focus:outline-none focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+            ' w-full px-4 py-3 rounded-lg text-gray-800 border-0 focus:outline-none focus:outline-blue-600 ring-1 ring-inset ring-slate-600 placeholder:text-gray-400 focus:ring-2'
           }
           {...register('jobTitle', {
             required: true,
@@ -68,7 +68,7 @@ const SearchForm = () => {
           onChange={(e) => setJobTitleLocal(e.target.value)}
         />
       </div>
-      <div className='w-full md:w-2/4 md:pl-2'>
+      <div className='w-full md:w-2/5 md:pl-2'>
         <label htmlFor='jobLocation' className='sr-only'>
           Location
         </label>
@@ -78,7 +78,7 @@ const SearchForm = () => {
           placeholder='Enter Keywords or Location'
           className={
             (errors.jobLocation && 'ring-red-700') +
-            ' w-full px-4 py-3 rounded-lg text-gray-800 border-0 focus:outline-none focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+            ' w-full px-4 py-3 rounded-lg text-gray-800 border-0 focus:outline-none focus:outline-blue-600 ring-1 ring-inset ring-slate-600 placeholder:text-gray-400 focus:ring-2'
           }
           {...register('jobLocation', {
             required: true,
@@ -90,7 +90,7 @@ const SearchForm = () => {
       <Button
         type='submit'
         size='lg'
-        className='md:ml-4 px-6 rounded-lg bg-sky-900 text-white hover:bg-sky-700 focus:outline-none focus:ring focus:ring-blue-500'
+        className='md:ml-4 mt-4 md:mt-0 w-full md:w-1/5 md:max-w-28 px-6 rounded-lg bg-sky-900 text-white hover:bg-sky-700 focus:outline-none focus:ring focus:ring-blue-500'
       >
         Search
       </Button>

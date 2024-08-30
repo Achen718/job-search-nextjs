@@ -4,7 +4,7 @@ import { Typography } from '@material-tailwind/react';
 
 const JobCard = ({ job }: JobProps) => {
   return (
-    <div className='bg-white rounded-xl shadow-md relative hover:bg-gray-300'>
+    <div className='bg-white rounded-xl shadow-lg relative hover:bg-gray-200 ring-1 ring-slate-500'>
       <div className='p-4 text-left'>
         <div className='mb-6'>
           <Typography variant='h3' className='text-lg font-bold'>

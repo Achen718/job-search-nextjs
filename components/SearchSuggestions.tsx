@@ -17,7 +17,7 @@ const SearchSuggestions = () => {
   const [jobPostings, setJobPostings] = useState<JobType[]>([]);
   const [suggestions, setSuggestions] = useState([]);
   const searched = useAppSelector((state) => state.recentSearch.recentSearches);
-  // get last search result
+  // get latest search result
   const recentlySearched = searched.at(-1);
   const defaultCard =
     (jobPostings && jobPostings.length) > 0 ? jobPostings[0].id : null;
@@ -25,18 +25,21 @@ const SearchSuggestions = () => {
   const tabHeaderId = [
     '[&_#tab-header-suggested]:!translate-x-0',
     '[&_#tab-header-suggested]:bg-transparent',
-    '[&_#tab-header-suggested]:border-2',
-    '[&_#tab-header-suggested]:border-blue-500',
+    '[&_#tab-header-suggested]:ring-2',
+    '[&_#tab-header-suggested]:ring-blue-500',
+    '[&_#tab-header-suggested]:rounded-xl',
   ];
 
   useEffect(() => {
     const fetchRecentSearch = async () => {
-      const jobs = await setSearchSuggestions(
-        recentlySearched.jobTitle,
-        recentlySearched.jobLocation
-      );
-      setSuggestions(recentlySearched);
-      setJobPostings(jobs);
+      if (recentlySearched) {
+        const jobs = await setSearchSuggestions(
+          recentlySearched.jobTitle,
+          recentlySearched.jobLocation
+        );
+        setSuggestions(recentlySearched);
+        setJobPostings(jobs);
+      }
     };
     fetchRecentSearch();
   }, []);
@@ -47,7 +50,7 @@ const SearchSuggestions = () => {
         <Tabs value={defaultCard} orientation='vertical'>
           <TabsHeader
             indicatorProps={{ id: 'tab-header-suggested' }}
-            className='p-2'
+            className='p-2 bg-inherit'
           >
             {jobPostings.map((job) => (
               <Tab
@@ -75,7 +78,7 @@ const SearchSuggestions = () => {
             }}
           >
             {jobPostings.map((job) => (
-              <TabPanel key={job.id} value={job.id} className='tab-panel'>
+              <TabPanel key={job.id} value={job.id} className='tab-panel pt-2'>
                 {/* update job card details */}
                 <JobDetails key={job.id} job={job} />
               </TabPanel>

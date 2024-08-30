@@ -32,10 +32,13 @@ export const recentSearchSlice = createSlice({
         state.recentSearches.push(action.payload);
       }
     },
+    removeSearch: (state, action: PayloadAction<number>) => {
+      state.recentSearches.splice(action.payload, 1);
+    },
   },
 });
 
-export const { setJobTitle, setJobLocation, addSearch } =
+export const { setJobTitle, setJobLocation, addSearch, removeSearch } =
   recentSearchSlice.actions;
 
 export const searched = (state: RootState) => state.recentSearch;

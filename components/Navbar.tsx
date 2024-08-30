@@ -17,7 +17,7 @@ function NavList() {
         as='li'
         variant='small'
         color='blue-gray'
-        className='p-1 font-medium'
+        className='p-1 font-medium text-base'
       >
         <Link
           href='/'
@@ -26,12 +26,7 @@ function NavList() {
           Home
         </Link>
       </Typography>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium'
-      >
+      <Typography as='li' color='blue-gray' className='p-1 font-medium'>
         <Link
           href='/salaries'
           className='flex items-center hover:text-blue-600 transition-colors'
@@ -39,12 +34,7 @@ function NavList() {
           Salaries
         </Link>
       </Typography>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium'
-      >
+      <Typography as='li' color='blue-gray' className='p-1 font-medium'>
         <Link
           href='/jobs'
           className='flex items-center hover:text-blue-600 transition-colors'
@@ -52,12 +42,7 @@ function NavList() {
           Jobs
         </Link>
       </Typography>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium'
-      >
+      <Typography as='li' color='blue-gray' className='p-1 font-medium'>
         <a
           href='#'
           className='flex items-center hover:text-blue-600 transition-colors'
@@ -86,7 +71,7 @@ export default function NavbarSimple() {
   return (
     <div className='sticky top-0 w-full z-[999]'>
       <div>
-        <Navbar className='mx-auto px-6 py-3 max-w-full'>
+        <Navbar className='mx-auto px-6 py-3 max-w-full rounded-none'>
           <div className='mx-auto container'>
             <div className='flex items-center justify-between text-blue-gray-900'>
               <Typography
@@ -101,14 +86,17 @@ export default function NavbarSimple() {
                 <NavList />
               </div>
               <div className='flex items-center gap-x-1'>
-                <Button
-                  variant='gradient'
-                  size='sm'
-                  // color='blue-gray'
-                  className='hidden lg:inline-block'
-                >
-                  <Link href='/add'>Create Job</Link>
-                </Button>
+                <Link href='/add'>
+                  <Button
+                    variant='gradient'
+                    size='sm'
+                    // color='blue-gray'
+                    className='hidden lg:inline-block'
+                  >
+                    Create Job Post
+                  </Button>
+                </Link>
+
                 <Button
                   variant='gradient'
                   size='sm'

@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const JobDetails = ({ job }: JobProps) => {
   return (
-    <Card className='text-left'>
+    <Card className='text-left border border-slate-500'>
       <CardBody className='p-2'>
         {/* set header */}
         {/* icon */}

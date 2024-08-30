@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import SuggestedJobCard from './SuggestedTab';
 import SearchSuggestions from './SearchSuggestions';
 import RecentSearchTab from './RecentTab';
 import { homeTabItems } from '../constants/index';
@@ -15,21 +14,15 @@ import {
 const JobSearchTabs = () => {
   const [activeTab, setActiveTab] = useState<string>('Suggested');
 
-  // refactor usecontext?
-  const TabContent = ({ value }: { value: string }) => {
-    // return value === 'Recent' ? <RecentSearchTab /> : <SuggestedJobCard />;
-    return value === 'Recent' ? <RecentSearchTab /> : <SearchSuggestions />;
-  };
-
   return (
     // Todo: add mobile responsiveness
-    <Tabs value={activeTab}>
+    <Tabs value={activeTab} className='h-screen'>
       <TabsHeader
         className='rounded-none border-b border-blue-gray-50 bg-transparent p-0 justify-center'
         indicatorProps={{
           id: 'tabs-header-indicator',
           className:
-            'bg-transparent border-b-4 border-blue-500 shadow-none rounded-none',
+            'bg-transparent border-b-4 border-sky-800 shadow-none rounded-none',
         }}
       >
         {homeTabItems.map(({ label, value }) => (
@@ -63,7 +56,7 @@ const JobSearchTabs = () => {
       >
         {homeTabItems.map(({ value }) => (
           <TabPanel key={value} value={value}>
-            <TabContent value={value} />
+            {value === 'Recent' ? <RecentSearchTab /> : <SearchSuggestions />}
           </TabPanel>
         ))}
       </TabsBody>
