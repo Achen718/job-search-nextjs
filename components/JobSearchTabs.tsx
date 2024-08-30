@@ -11,7 +11,6 @@ import {
   Tab,
   TabPanel,
 } from '@material-tailwind/react';
-import { prisma } from '@/lib/prisma';
 
 const JobSearchTabs = () => {
   const [activeTab, setActiveTab] = useState<string>('Suggested');
@@ -23,6 +22,7 @@ const JobSearchTabs = () => {
   };
 
   return (
+    // Todo: add mobile responsiveness
     <Tabs value={activeTab}>
       <TabsHeader
         className='rounded-none border-b border-blue-gray-50 bg-transparent p-0 justify-center'

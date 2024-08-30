@@ -28,7 +28,9 @@ export const recentSearchSlice = createSlice({
       state,
       action: PayloadAction<{ jobTitle: string; jobLocation: string }>
     ) => {
-      state.recentSearches.push(action.payload);
+      if (action.payload.jobTitle !== '' && action.payload.jobLocation !== '') {
+        state.recentSearches.push(action.payload);
+      }
     },
   },
 });

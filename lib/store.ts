@@ -1,6 +1,5 @@
 'use client';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import filteredJobsSlice from './features/filteredJobs/filteredJobsSlice';
 import recentSearchSlice from './features/recentSearches/recentSearchSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from './storage';
@@ -21,7 +20,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const makeConfiguredStore = () =>
   configureStore({
     reducer: {
-      filteredJobs: filteredJobsSlice,
       recentSearch: persistedReducer,
     },
     middleware: (getDefaultMiddleware) =>

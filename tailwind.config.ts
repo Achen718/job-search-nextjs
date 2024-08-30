@@ -9,14 +9,24 @@ const config: Config = withMT({
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
-      },
       gridTemplateColumns: {
         '70/30': '70% 28%',
       },
       width: {
         w70: '70%',
+      },
+      colors: {
+        sky: {
+          300: '#7dd3fc',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
+        },
+        cyan: {
+          800: '#155e75',
+          950: '#082f49',
+        },
       },
     },
   },

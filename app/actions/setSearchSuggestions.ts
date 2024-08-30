@@ -16,7 +16,6 @@ async function setSearchSuggestions(title: string, location: string) {
       },
     },
   });
-  console.log(getJobsbyRecent);
 
   return getJobsbyRecent;
 }

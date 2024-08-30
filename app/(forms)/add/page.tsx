@@ -47,6 +47,7 @@ const CreateJobForm = () => {
     reset();
   });
 
+  // Todo: refactor to own component, set form hook props
   return (
     <form onSubmit={onSubmit}>
       <h2 className='text-3xl text-center font-semibold mb-6'>

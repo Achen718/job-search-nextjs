@@ -20,7 +20,7 @@ const SearchSuggestions = () => {
   // get last search result
   const recentlySearched = searched.at(-1);
   const defaultCard =
-    jobPostings && jobPostings.length > 0 ? jobPostings[0].id : null;
+    (jobPostings && jobPostings.length) > 0 ? jobPostings[0].id : null;
   // tab header classnames
   const tabHeaderId = [
     '[&_#tab-header-suggested]:!translate-x-0',
@@ -35,7 +35,6 @@ const SearchSuggestions = () => {
         recentlySearched.jobTitle,
         recentlySearched.jobLocation
       );
-      console.log(jobs);
       setSuggestions(recentlySearched);
       setJobPostings(jobs);
     };

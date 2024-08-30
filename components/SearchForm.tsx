@@ -1,12 +1,19 @@
 'use client';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { Button } from '@material-tailwind/react';
 import {
   setJobTitle,
   setJobLocation,
   addSearch,
 } from '../lib/features/recentSearches/recentSearchSlice';
 import { useAppDispatch } from '@/lib/hooks';
+
+interface SearchInput {
+  jobTitle: string;
+  jobLocation: string;
+}
 
 const SearchForm = () => {
   const [jobTitle, setJobTitleLocal] = useState<string>('');
@@ -15,20 +22,27 @@ const SearchForm = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const handleSearch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<SearchInput>({
+    defaultValues: {
+      jobTitle: '',
+      jobLocation: '',
+    },
+  });
 
-    if (jobLocation === '' && jobTitle === '') {
-      router.push('/jobs');
-    } else {
-      const query = `?jobTitle=${jobTitle}&location=${jobLocation}`;
+  const handleSearch = handleSubmit(() => {
+    const query = `?jobTitle=${jobTitle}&location=${jobLocation}`;
+    router.push(`/jobs${query}`);
 
-      router.push(`/jobs${query}`);
-    }
     dispatch(setJobTitle(jobTitle));
     dispatch(setJobLocation(jobLocation));
     dispatch(addSearch({ jobTitle, jobLocation }));
-  };
+  });
 
   return (
     <form
@@ -43,7 +57,13 @@ const SearchForm = () => {
           type='text'
           id='jobTitle'
           placeholder='Enter Keywords or Location'
-          className='w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500'
+          className={
+            (errors.jobTitle && 'ring-red-700') +
+            ' w-full px-4 py-3 rounded-lg text-gray-800 border-0 focus:outline-none focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+          }
+          {...register('jobTitle', {
+            required: true,
+          })}
           value={jobTitle}
           onChange={(e) => setJobTitleLocal(e.target.value)}
         />
@@ -56,17 +76,24 @@ const SearchForm = () => {
           type='text'
           id='jobLocation'
           placeholder='Enter Keywords or Location'
-          className='w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500'
+          className={
+            (errors.jobLocation && 'ring-red-700') +
+            ' w-full px-4 py-3 rounded-lg text-gray-800 border-0 focus:outline-none focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+          }
+          {...register('jobLocation', {
+            required: true,
+          })}
           value={jobLocation}
           onChange={(e) => setJobLocationLocal(e.target.value)}
         />
       </div>
-      <button
+      <Button
         type='submit'
-        className='md:ml-4 mt-4 md:mt-0 w-full md:w-auto px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500'
+        size='lg'
+        className='md:ml-4 px-6 rounded-lg bg-sky-900 text-white hover:bg-sky-700 focus:outline-none focus:ring focus:ring-blue-500'
       >
         Search
-      </button>
+      </Button>
     </form>
   );
 };
