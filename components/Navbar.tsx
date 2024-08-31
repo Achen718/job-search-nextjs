@@ -21,12 +21,9 @@ function NavList() {
           as='li'
           variant='small'
           color='blue-gray'
-          className='p-1 font-medium text-base'
+          className='p-1 font-medium text-base hover:text-blue-500 transition-colors'
         >
-          <Link
-            href={route}
-            className='flex items-center hover:text-white hover:bg-slate-600 transition-colors'
-          >
+          <Link href={route} className='flex items-center'>
             {name}
           </Link>
         </Typography>
@@ -61,7 +58,7 @@ export default function NavbarSimple() {
                 variant='h6'
                 className='mr-4 cursor-pointer py-1.5'
               >
-                Material Tailwind
+                JobSearch NextJs
               </Typography>
               <div className='hidden lg:block'>
                 <NavList />

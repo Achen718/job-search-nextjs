@@ -31,7 +31,7 @@ const JobSearchTabs = () => {
             value={value}
             onClick={() => setActiveTab(value)}
             className={
-              (activeTab === value ? 'text-gray-900 font-bold' : '') +
+              (activeTab === value ? 'text-gray-900 font-semibold' : '') +
               ' max-w-72 [&_#tabs-header-indicator]:!translate-x-0'
             }
           >
