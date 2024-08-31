@@ -9,14 +9,13 @@ import Image from 'next/image';
 
 const JobDetails = ({ job }: JobProps) => {
   const postedDate = formatPostedDate(job.createdAt);
-  console.log(job);
 
   return (
     <Card className='text-left border border-slate-500'>
       <CardBody className='p-4'>
         {/* set header */}
         {/* icon */}
-        <div className='justify-between items-end flex flex-row flex-wrap mb-2'>
+        <div className='items-end flex flex-row flex-wrap mb-2'>
           <div className='flex flex-col flex-wrap'>
             <Image
               src={job.img ?? ''}
@@ -24,21 +23,19 @@ const JobDetails = ({ job }: JobProps) => {
               height={60}
               alt='Company Logo'
             />
-            <Typography>{job.author}</Typography>
+            <Typography className='mt-2'>{job.author}</Typography>
           </div>
-          <div className='mx-4'>
-            <Typography variant='h6' color='blue-gray' className='mb-2'>
+          <div className='mx-6'>
+            <Typography variant='h6' color='blue-gray'>
               {job.title}
             </Typography>
-            <Typography color='blue-gray' className='mb-2'>
-              Posted {postedDate}
-            </Typography>
+            <Typography color='blue-gray'>Posted {postedDate}</Typography>
           </div>
           <div>
-            <Typography variant='h6' color='blue-gray' className='mb-2'>
+            <Typography variant='h6' color='blue-gray'>
               {job.employmentType}
             </Typography>
-            <Typography variant='h6' color='blue-gray' className='mb-2'>
+            <Typography variant='h6' color='blue-gray'>
               {job.location}
             </Typography>
           </div>
@@ -63,7 +60,6 @@ const JobDetails = ({ job }: JobProps) => {
             </IconButton>
           </Link>
         </div>
-
         <div className='border border-gray-100 mb-5 mt-2'></div>
         <Typography>{job.description}</Typography>
         {/* set conditional for details */}
