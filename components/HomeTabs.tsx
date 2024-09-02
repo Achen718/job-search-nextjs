@@ -11,7 +11,7 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 
-const JobSearchTabs = () => {
+const HomeTabs = () => {
   const [activeTab, setActiveTab] = useState<string>('Suggested');
 
   return (
@@ -64,4 +64,4 @@ const JobSearchTabs = () => {
   );
 };
 
-export default JobSearchTabs;
+export default HomeTabs;

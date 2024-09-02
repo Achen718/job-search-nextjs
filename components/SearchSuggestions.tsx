@@ -30,6 +30,7 @@ const SearchSuggestions = () => {
     '[&_#tab-header-suggested]:rounded-xl',
   ];
 
+  // todo: Optional, add server action to fetch suggested jobs from prisma
   useEffect(() => {
     const fetchRecentSearch = async () => {
       if (recentlySearched) {
@@ -50,7 +51,7 @@ const SearchSuggestions = () => {
         <Tabs value={defaultCard} orientation='vertical'>
           <TabsHeader
             indicatorProps={{ id: 'tab-header-suggested' }}
-            className='p-2 bg-inherit'
+            className='p-2 bg-inherit overflow-scroll'
           >
             {jobPostings.map((job) => (
               <Tab
@@ -79,7 +80,6 @@ const SearchSuggestions = () => {
           >
             {jobPostings.map((job) => (
               <TabPanel key={job.id} value={job.id} className='tab-panel pt-2'>
-                {/* update job card details */}
                 <JobDetails key={job.id} job={job} />
               </TabPanel>
             ))}

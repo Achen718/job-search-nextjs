@@ -4,6 +4,7 @@ import {
   TabsHeader,
   TabsBody,
   Tab,
+  Button,
   TabPanel,
 } from '@material-tailwind/react';
 import JobCard from './JobCard';
@@ -27,7 +28,6 @@ const SearchResults = ({
   const [jobs, setJobs] = useState<JobType[]>([]);
   const [localPage, setPage] = useState(page);
   const [totalPages, setTotalPages] = useState(0);
-  console.log(totalPages);
 
   const fetchJobs = () => {
     fetch(
@@ -44,7 +44,7 @@ const SearchResults = ({
 
   useEffect(() => {
     fetchJobs();
-  }, [localPage, totalPages]);
+  }, [localPage]);
 
   const pagehandler = (page: number) => {
     setPage(page);
@@ -62,7 +62,7 @@ const SearchResults = ({
   ];
 
   return (
-    <section>
+    <section className='mx-auto max-w-7xl sm:px-4 lg:px-6 text-center h-screen'>
       {defaultCard ? (
         <Tabs value={defaultCard} orientation='vertical'>
           <TabsHeader
@@ -73,31 +73,32 @@ const SearchResults = ({
               <Tab
                 key={job.id}
                 value={job.id}
-                className={tabHeaderId.join(' ') + ' block p-0 mb-2 last:mb-0'}
+                className={
+                  tabHeaderId.join(' ') +
+                  ' block p-0 mb-2 last:mb-0 max-w-full w-96'
+                }
               >
                 <JobCard key={job.id} job={job} />
               </Tab>
             ))}
-            <div>
-              <div className='flex justify-center mt-4'>
-                {localPage > 1 && (
-                  <button
-                    className='px-4 py-2 text-white bg-blue-500 rounded-md'
-                    onClick={() => pagehandler(localPage - 1)}
-                  >
-                    Prev Page
-                  </button>
-                )}
+            <div className='flex justify-center mt-4'>
+              {localPage > 1 && (
+                <Button
+                  className='px-4 py-2 text-white bg-blue-500 rounded-md mx-4'
+                  onClick={() => pagehandler(localPage - 1)}
+                >
+                  Prev Page
+                </Button>
+              )}
 
-                {localPage < totalPages && (
-                  <button
-                    className='px-4 py-2 text-white bg-blue-500 rounded-md'
-                    onClick={() => pagehandler(localPage + 1)}
-                  >
-                    Next Page
-                  </button>
-                )}
-              </div>
+              {localPage < totalPages && (
+                <Button
+                  className='mx-4 px-4 py-2 text-white bg-blue-500 rounded-md'
+                  onClick={() => pagehandler(localPage + 1)}
+                >
+                  Next Page
+                </Button>
+              )}
             </div>
           </TabsHeader>
           <TabsBody
@@ -124,7 +125,7 @@ const SearchResults = ({
           </TabsBody>
         </Tabs>
       ) : (
-        <div className='text-center text-blue-500'>
+        <div className='text-center text-blue-500 m-2 p-8'>
           <p>No jobs found</p>
         </div>
       )}

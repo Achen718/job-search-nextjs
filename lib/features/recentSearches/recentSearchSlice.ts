@@ -14,6 +14,8 @@ const initialState: JobSearchState = {
   recentSearches: [],
 };
 
+const maxRecentSearch = 5;
+
 export const recentSearchSlice = createSlice({
   name: 'recentSearch',
   initialState,
@@ -29,6 +31,9 @@ export const recentSearchSlice = createSlice({
       action: PayloadAction<{ jobTitle: string; jobLocation: string }>
     ) => {
       if (action.payload.jobTitle !== '' && action.payload.jobLocation !== '') {
+        if (state.recentSearches.length >= maxRecentSearch) {
+          state.recentSearches.shift();
+        }
         state.recentSearches.push(action.payload);
       }
     },

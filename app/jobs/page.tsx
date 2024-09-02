@@ -1,6 +1,7 @@
 import SearchResults from '../../components/SearchResults';
 import { prisma } from '@/lib/prisma';
 import JobStoreProvider from '../StoreProvider';
+import SearchForm from '@/components/SearchForm';
 
 const JobsPage = async ({
   searchParams: { jobTitle, jobLocation, page = 1 },
@@ -25,6 +26,7 @@ const JobsPage = async ({
     <section>
       <div>
         <JobStoreProvider>
+          <SearchForm />
           <SearchResults
             jobTitle={jobTitle}
             jobLocation={jobLocation}

@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { useEdgeStore } from '@/lib/edgestore';
 import { addJob, type FormData } from './actions/addJob';
-import { useRouter } from 'next/router';
+import { Button } from '@material-tailwind/react';
 
 const CreateJobForm = () => {
   const [file, setFile] = useState<File>();
@@ -191,12 +191,12 @@ const CreateJobForm = () => {
         </div>
 
         <div>
-          <button
+          <Button
             className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
             type='submit'
           >
             Add Job
-          </button>
+          </Button>
         </div>
       </form>
     </div>
