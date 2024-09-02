@@ -11,7 +11,7 @@ interface filteredJobsType {
   location: string;
   description: string;
   employmentType: string | null;
-  createdAt: string;
+  createdAt: Date;
 }
 
 interface FilteredJobsState {

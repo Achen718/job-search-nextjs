@@ -90,11 +90,8 @@ export default function NavbarSimple() {
                 ripple={false}
                 onClick={() => setOpenNav(!openNav)}
               >
-                {openNav ? (
-                  <XMarkIcon className='h-6 w-6' strokeWidth={2} />
-                ) : (
-                  <Bars3Icon className='h-6 w-6' strokeWidth={2} />
-                )}
+                {openNav && <XMarkIcon className='h-6 w-6' strokeWidth={2} />}
+                {!openNav && <Bars3Icon className='h-6 w-6' strokeWidth={2} />}
               </IconButton>
             </div>
           </div>

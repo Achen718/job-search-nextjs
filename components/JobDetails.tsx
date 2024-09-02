@@ -17,12 +17,14 @@ const JobDetails = ({ job }: JobProps) => {
         {/* icon */}
         <div className='items-end flex flex-row flex-wrap mb-2'>
           <div className='flex flex-col flex-wrap'>
-            <Image
-              src={job.img ?? ''}
-              width={60}
-              height={60}
-              alt='Company Logo'
-            />
+            <div className='h-14 w-14 flex justify-center items-center'>
+              <Image
+                src={job.img ?? ''}
+                width={60}
+                height={60}
+                alt='Company Logo'
+              />
+            </div>
             <Typography className='mt-2'>{job.author}</Typography>
           </div>
           <div className='mx-6'>

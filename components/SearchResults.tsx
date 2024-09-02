@@ -9,13 +9,38 @@ import {
 import JobCard from './JobCard';
 import JobDetails from './JobDetails';
 import { JobType } from '@/types/jobTypes';
+import { useEffect, useState } from 'react';
 
-interface SuggestedProps {
-  jobs: JobType[];
+interface paramProps {
+  jobTitle: string;
+  jobLocation: string;
+  page: number;
 }
 
-const SearchResults = ({ jobs }: SuggestedProps) => {
-  // first job listing as default active tab
+const SearchResults = ({ jobTitle, jobLocation, page }: paramProps) => {
+  const [jobs, setJobs] = useState<JobType[]>([]);
+  const [localPage, setPage] = useState(page);
+
+  const fetchJobs = () => {
+    fetch(
+      `/api/jobs?jobTitle=${jobTitle}&jobLocation=${jobLocation}&page=${localPage}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setJobs(data);
+      });
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, [localPage]);
+
+  const pagehandler = (page: number) => {
+    setPage(page);
+    fetchJobs();
+  };
+
+  // Todo: Set default card on pagination updates
   const defaultCard = jobs && jobs.length > 0 ? jobs[0].id : null;
   // tab header classnames
   const tabHeaderId = [
@@ -42,6 +67,22 @@ const SearchResults = ({ jobs }: SuggestedProps) => {
                 <JobCard key={job.id} job={job} />
               </Tab>
             ))}
+            <div>
+              <div className='flex justify-center mt-4'>
+                <button
+                  className='px-4 py-2 text-white bg-blue-500 rounded-md'
+                  onClick={() => pagehandler(localPage - 1)}
+                >
+                  Prev Page
+                </button>
+                <button
+                  className='px-4 py-2 text-white bg-blue-500 rounded-md'
+                  onClick={() => pagehandler(localPage + 1)}
+                >
+                  Next Page
+                </button>
+              </div>
+            </div>
           </TabsHeader>
           <TabsBody
             className='w-w70'

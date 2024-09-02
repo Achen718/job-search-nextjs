@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { useEdgeStore } from '@/lib/edgestore';
 import { addJob, type FormData } from './actions/addJob';
+import { useRouter } from 'next/router';
 
 const CreateJobForm = () => {
   const [file, setFile] = useState<File>();
@@ -49,151 +50,156 @@ const CreateJobForm = () => {
 
   // Todo: refactor to own component, set form hook props
   return (
-    <form onSubmit={onSubmit}>
-      <h2 className='text-3xl text-center font-semibold mb-6'>
-        Add Your Job Post
-      </h2>
-      <div className='mb-4'>
-        <label htmlFor='title' className='block text-gray-700 font-bold mb-2'>
-          Job Title
-        </label>
-        <input
-          type='text'
-          id='title'
-          className={
-            (errors.title && 'ring-red-700') +
-            ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
-          }
-          placeholder='eg. Software Engineer, Product Manager, etc.'
-          {...register('title', { required: true })}
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='employmentType'
-          className='block text-gray-700 font-bold mb-2'
-        >
-          Employment Type
-        </label>
-        <select
-          id='employmentType'
-          className={
-            (errors.employmentType && 'ring-red-700') +
-            ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
-          }
-          {...register('employmentType', {
-            required: true,
-          })}
-        >
-          <option value='Part Time'>Part-Time</option>
-          <option value='Full Time'>Full-Time</option>
-          <option value='Temporary'>Contract/Temp</option>
-        </select>
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='description'
-          className='block text-gray-700 font-bold mb-2'
-        >
-          job Description
-        </label>
-        <textarea
-          id='description'
-          {...register('description')}
-          className='border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
-          rows={4}
-          placeholder='Add Job Description. eg. requirements, responsibiles'
-        ></textarea>
-      </div>
-
-      <div className='mb-4 bg-blue-50 p-4'>
-        <label className='block text-gray-700 font-bold mb-2'>Location</label>
-        <input
-          type='text'
-          id='location'
-          {...register('location', { required: true })}
-          className={
-            (errors.location && 'ring-red-700') +
-            ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
-          }
-          placeholder='location'
-        />
-      </div>
-
-      <div className='mb-4 flex flex-wrap'>
-        <div className='w-full sm:w-1/3 pr-2'>
-          <label htmlFor='beds' className='block text-gray-700 font-bold mb-2'>
-            Company Name
+    <div className='block w-full relative bg-transparent overflow-hidden mx-auto max-w-3xl md:my-4 p-4 sm:px-4 lg:p-6 text-center'>
+      <form onSubmit={onSubmit}>
+        <h2 className='text-3xl text-center font-semibold mb-6'>
+          Create Job Post
+        </h2>
+        <div className='mb-4'>
+          <label htmlFor='title' className='block text-gray-700 font-bold mb-2'>
+            Job Title
           </label>
           <input
             type='text'
-            id='author'
-            {...register('author', { required: true })}
+            id='title'
             className={
-              (errors.author && 'ring-red-700') +
+              (errors.title && 'ring-red-700') +
               ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
             }
+            placeholder='eg. Software Engineer, Product Manager, etc.'
+            {...register('title', { required: true })}
           />
         </div>
-        <div className='w-full sm:w-1/3 px-2'>
+        <div className='mb-4'>
           <label
-            htmlFor='salaryMin'
+            htmlFor='employmentType'
             className='block text-gray-700 font-bold mb-2'
           >
-            Minimum Salary
+            Employment Type
           </label>
-          <input
-            type='number'
-            id='salaryMin'
+          <select
+            id='employmentType'
             className={
-              (errors.salaryMin && 'ring-red-700') +
+              (errors.employmentType && 'ring-red-700') +
               ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
             }
-            {...register('salaryMin', { required: true, min: 0 })}
-          />
+            {...register('employmentType', {
+              required: true,
+            })}
+          >
+            <option value='Part Time'>Part-Time</option>
+            <option value='Full Time'>Full-Time</option>
+            <option value='Temporary'>Contract/Temp</option>
+          </select>
         </div>
-        <div className='w-full sm:w-1/3 pl-2'>
+        <div className='mb-4'>
           <label
-            htmlFor='salaryMax'
+            htmlFor='description'
             className='block text-gray-700 font-bold mb-2'
           >
-            Maximum Salary
+            job Description
           </label>
-          <input
-            type='number'
-            id='salaryMax'
-            className={
-              (errors.salaryMax && 'ring-red-700') +
-              ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
-            }
-            {...register('salaryMax', { required: true, min: 0 })}
-          />
+          <textarea
+            id='description'
+            {...register('description')}
+            className='border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+            rows={4}
+            placeholder='Add Job Description. eg. requirements, responsibiles'
+          ></textarea>
         </div>
-      </div>
-      <div className='mb-4'>
-        <label htmlFor='img' className='block text-gray-700 font-bold mb-2'>
-          Company Logo (img)
-        </label>
-        <input
-          type='file'
-          id='file'
-          className='border-0 rounded w-full py-2 px-3'
-          onChange={(e) => {
-            setFile(e.target.files?.[0]);
-          }}
-        />
-        <input type='hidden' id='img' {...register('img')} />
-      </div>
 
-      <div>
-        <button
-          className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
-          type='submit'
-        >
-          Add Job
-        </button>
-      </div>
-    </form>
+        <div className='mb-4 bg-blue-50 p-4'>
+          <label className='block text-gray-700 font-bold mb-2'>Location</label>
+          <input
+            type='text'
+            id='location'
+            {...register('location', { required: true })}
+            className={
+              (errors.location && 'ring-red-700') +
+              ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+            }
+            placeholder='location'
+          />
+        </div>
+
+        <div className='mb-4 flex flex-wrap'>
+          <div className='w-full sm:w-1/3 pr-2'>
+            <label
+              htmlFor='author'
+              className='block text-gray-700 font-bold mb-2'
+            >
+              Company Name
+            </label>
+            <input
+              type='text'
+              id='author'
+              {...register('author', { required: true })}
+              className={
+                (errors.author && 'ring-red-700') +
+                ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2'
+              }
+            />
+          </div>
+          <div className='w-full sm:w-1/3 px-2'>
+            <label
+              htmlFor='salaryMin'
+              className='block text-gray-700 font-bold mb-2'
+            >
+              Minimum Salary
+            </label>
+            <input
+              type='number'
+              id='salaryMin'
+              className={
+                (errors.salaryMin && 'ring-red-700') +
+                ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+              }
+              {...register('salaryMin', { required: true, min: 0 })}
+            />
+          </div>
+          <div className='w-full sm:w-1/3 pl-2'>
+            <label
+              htmlFor='salaryMax'
+              className='block text-gray-700 font-bold mb-2'
+            >
+              Maximum Salary
+            </label>
+            <input
+              type='number'
+              id='salaryMax'
+              className={
+                (errors.salaryMax && 'ring-red-700') +
+                ' border-0 rounded w-full py-2 px-3 focus:outline-blue-600 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+              }
+              {...register('salaryMax', { required: true, min: 0 })}
+            />
+          </div>
+        </div>
+        <div className='mb-4'>
+          <label htmlFor='img' className='block text-gray-700 font-bold mb-2'>
+            Company Logo (img)
+          </label>
+          <input
+            type='file'
+            id='file'
+            className='border-0 rounded w-full py-2 px-3'
+            onChange={(e) => {
+              setFile(e.target.files?.[0]);
+            }}
+          />
+          <input type='hidden' id='img' {...register('img')} />
+        </div>
+
+        <div>
+          <button
+            className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
+            type='submit'
+          >
+            Add Job
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

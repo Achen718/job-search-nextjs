@@ -1,6 +1,6 @@
 export function formatPostedDate(createdAt: Date): string {
-  const dateToString = createdAt.toISOString();
-  const postedDate = new Date(dateToString);
+  // const dateToString = createdAt.toISOString();
+  const postedDate = new Date(createdAt);
   const currentDate = new Date().getTime();
   const differenceInMilliseconds = currentDate - postedDate.getTime();
 

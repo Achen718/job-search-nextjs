@@ -1,32 +1,20 @@
 import SearchResults from '../../components/SearchResults';
-import { prisma } from '@/lib/prisma';
 import JobStoreProvider from '../StoreProvider';
 
 const JobsPage = async ({
-  searchParams: { jobTitle, jobLocation },
+  searchParams: { jobTitle, jobLocation, page = 1 },
 }: {
-  searchParams: { jobTitle: string; jobLocation: string };
+  searchParams: { jobTitle: string; jobLocation: string; page: number };
 }) => {
-  console.log('test');
-  // todo: add search for multi word job titles
-  const jobs = await prisma.jobPosting.findMany({
-    where: {
-      title: {
-        contains: jobTitle,
-        mode: 'insensitive',
-      },
-      location: {
-        contains: jobLocation,
-        mode: 'insensitive',
-      },
-    },
-  });
-
   return (
     <section>
       <div>
         <JobStoreProvider>
-          <SearchResults jobs={jobs} />
+          <SearchResults
+            jobTitle={jobTitle}
+            jobLocation={jobLocation}
+            page={page}
+          />
         </JobStoreProvider>
       </div>
     </section>
