@@ -15,11 +15,19 @@ interface paramProps {
   jobTitle: string;
   jobLocation: string;
   page: number;
+  totalItems: number;
 }
 
-const SearchResults = ({ jobTitle, jobLocation, page }: paramProps) => {
+const SearchResults = ({
+  jobTitle,
+  jobLocation,
+  page,
+  totalItems,
+}: paramProps) => {
   const [jobs, setJobs] = useState<JobType[]>([]);
   const [localPage, setPage] = useState(page);
+  const [totalPages, setTotalPages] = useState(0);
+  console.log(totalPages);
 
   const fetchJobs = () => {
     fetch(
@@ -28,12 +36,15 @@ const SearchResults = ({ jobTitle, jobLocation, page }: paramProps) => {
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
+        const jobsPerPage = jobs.length;
+        const totalList = Math.ceil(totalItems / jobsPerPage);
+        setTotalPages(totalList);
       });
   };
 
   useEffect(() => {
     fetchJobs();
-  }, [localPage]);
+  }, [localPage, totalPages]);
 
   const pagehandler = (page: number) => {
     setPage(page);
@@ -69,18 +80,23 @@ const SearchResults = ({ jobTitle, jobLocation, page }: paramProps) => {
             ))}
             <div>
               <div className='flex justify-center mt-4'>
-                <button
-                  className='px-4 py-2 text-white bg-blue-500 rounded-md'
-                  onClick={() => pagehandler(localPage - 1)}
-                >
-                  Prev Page
-                </button>
-                <button
-                  className='px-4 py-2 text-white bg-blue-500 rounded-md'
-                  onClick={() => pagehandler(localPage + 1)}
-                >
-                  Next Page
-                </button>
+                {localPage > 1 && (
+                  <button
+                    className='px-4 py-2 text-white bg-blue-500 rounded-md'
+                    onClick={() => pagehandler(localPage - 1)}
+                  >
+                    Prev Page
+                  </button>
+                )}
+
+                {localPage < totalPages && (
+                  <button
+                    className='px-4 py-2 text-white bg-blue-500 rounded-md'
+                    onClick={() => pagehandler(localPage + 1)}
+                  >
+                    Next Page
+                  </button>
+                )}
               </div>
             </div>
           </TabsHeader>
