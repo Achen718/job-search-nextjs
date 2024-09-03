@@ -11,6 +11,7 @@ import JobCard from './JobCard';
 import JobDetails from './JobDetails';
 import { JobType } from '@/types/jobTypes';
 import { useEffect, useState } from 'react';
+import { DefaultPagination } from './Pagination';
 
 interface paramProps {
   jobTitle: string;
@@ -26,33 +27,40 @@ const SearchResults = ({
   totalItems,
 }: paramProps) => {
   const [jobs, setJobs] = useState<JobType[]>([]);
-  const [localPage, setPage] = useState(page);
+  const [currentPage, setCurrentPage] = useState(page);
   const [totalPages, setTotalPages] = useState(0);
+  const [defaultCard, setDefaultCard] = useState<string | null>(null);
 
   const fetchJobs = () => {
     fetch(
-      `/api/jobs?jobTitle=${jobTitle}&jobLocation=${jobLocation}&page=${localPage}`
+      `/api/jobs?jobTitle=${jobTitle}&jobLocation=${jobLocation}&page=${currentPage}`
     )
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
-        const jobsPerPage = jobs.length;
-        const totalList = Math.ceil(totalItems / jobsPerPage);
+        const totalList = Math.ceil(totalItems / 4);
         setTotalPages(totalList);
       });
   };
 
-  useEffect(() => {
-    fetchJobs();
-  }, [localPage]);
-
   const pagehandler = (page: number) => {
-    setPage(page);
+    setCurrentPage(page);
     fetchJobs();
   };
 
+  useEffect(() => {
+    fetchJobs();
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (jobs.length > 0) {
+      setDefaultCard(jobs[0].id);
+    }
+  }, [jobs]);
+
   // Todo: Set default card on pagination updates
-  const defaultCard = jobs && jobs.length > 0 ? jobs[0].id : null;
+  // const defaultCard = jobs && jobs.length > 0 ? jobs[0].id : null;
+  // console.log(defaultCard);
   // tab header classnames
   const tabHeaderId = [
     '[&_#tab-header-suggested]:!translate-x-0',
@@ -82,23 +90,11 @@ const SearchResults = ({
               </Tab>
             ))}
             <div className='flex justify-center mt-4'>
-              {localPage > 1 && (
-                <Button
-                  className='px-4 py-2 text-white bg-blue-500 rounded-md mx-4'
-                  onClick={() => pagehandler(localPage - 1)}
-                >
-                  Prev Page
-                </Button>
-              )}
-
-              {localPage < totalPages && (
-                <Button
-                  className='mx-4 px-4 py-2 text-white bg-blue-500 rounded-md'
-                  onClick={() => pagehandler(localPage + 1)}
-                >
-                  Next Page
-                </Button>
-              )}
+              <DefaultPagination
+                pagehandler={pagehandler}
+                currentPage={currentPage}
+                totalPages={totalPages}
+              />
             </div>
           </TabsHeader>
           <TabsBody
