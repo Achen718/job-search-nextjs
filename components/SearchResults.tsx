@@ -10,7 +10,7 @@ import {
 import JobCard from './JobCard';
 import JobDetails from './JobDetails';
 import { JobType } from '@/types/jobTypes';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { DefaultPagination } from './Pagination';
 
 interface paramProps {
@@ -30,6 +30,7 @@ const SearchResults = ({
   const [currentPage, setCurrentPage] = useState(page);
   const [totalPages, setTotalPages] = useState(0);
   const [defaultCard, setDefaultCard] = useState<string | null>(null);
+  const ref = useRef([]);
 
   const fetchJobs = () => {
     fetch(
@@ -45,7 +46,6 @@ const SearchResults = ({
 
   const pagehandler = (page: number) => {
     setCurrentPage(page);
-    fetchJobs();
   };
 
   useEffect(() => {
@@ -58,15 +58,28 @@ const SearchResults = ({
     }
   }, [jobs]);
 
+  useEffect(() => {
+    if (ref.current.length > 0) {
+      ref.current[0].click();
+    }
+  }, [defaultCard]);
+
+  // const handleTabClick = (tabId: string) => {
+  //   const tabElement = document.getElementById(tabId);
+  //   if (tabElement) {
+  //     tabElement.click();
+  //   }
+  // };
+
   // Todo: Set default card on pagination updates
   // const defaultCard = jobs && jobs.length > 0 ? jobs[0].id : null;
-  // console.log(defaultCard);
   // tab header classnames
   const tabHeaderId = [
     '[&_#tab-header-suggested]:!translate-x-0',
     '[&_#tab-header-suggested]:bg-transparent',
-    '[&_#tab-header-suggested]:border-2',
-    '[&_#tab-header-suggested]:border-blue-500',
+    '[&_#tab-header-suggested]:ring-2',
+    '[&_#tab-header-suggested]:ring-blue-500',
+    '[&_#tab-header-suggested]:rounded-xl',
   ];
 
   return (
@@ -77,10 +90,11 @@ const SearchResults = ({
             indicatorProps={{ id: 'tab-header-suggested' }}
             className='p-2'
           >
-            {jobs.map((job) => (
+            {jobs.map((job, index) => (
               <Tab
                 key={job.id}
                 value={job.id}
+                ref={(el) => (ref.current[index] = el)}
                 className={
                   tabHeaderId.join(' ') +
                   ' block p-0 mb-2 last:mb-0 max-w-full w-96'
@@ -89,13 +103,11 @@ const SearchResults = ({
                 <JobCard key={job.id} job={job} />
               </Tab>
             ))}
-            <div className='flex justify-center mt-4'>
-              <DefaultPagination
-                pagehandler={pagehandler}
-                currentPage={currentPage}
-                totalPages={totalPages}
-              />
-            </div>
+            <DefaultPagination
+              pagehandler={pagehandler}
+              currentPage={currentPage}
+              totalPages={totalPages}
+            />
           </TabsHeader>
           <TabsBody
             className='w-w70'
@@ -113,7 +125,7 @@ const SearchResults = ({
             }}
           >
             {jobs.map((job) => (
-              <TabPanel key={job.id} value={job.id} className='tab-panel'>
+              <TabPanel key={job.id} value={job.id} className='tab-panel pt-2'>
                 {/* update job card details */}
                 <JobDetails key={job.id} job={job} />
               </TabPanel>
