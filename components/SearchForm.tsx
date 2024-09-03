@@ -45,7 +45,7 @@ const SearchForm = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className='my-3 mx-auto max-w-7xl w-full flex flex-col justify-center md:flex-row items-center'
+      className='my-3 mx-auto max-w-7xl px-6 w-full flex flex-col justify-center md:flex-row items-center container'
     >
       <div className='w-full md:w-2/5 md:pr-2 mb-4 md:mb-0'>
         <label htmlFor='jobTitle' className='sr-only'>

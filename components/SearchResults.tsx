@@ -78,9 +78,16 @@ const SearchResults = ({
   ];
 
   return (
-    <section className='mx-auto max-w-7xl sm:px-4 lg:px-6 text-center h-screen'>
+    <section
+      id='search-results'
+      className='container mx-auto max-w-7xl sm:px-4 lg:px-6 text-center h-screen overflow-scroll'
+    >
       {defaultCard ? (
-        <Tabs value={defaultCard} orientation='vertical'>
+        <Tabs
+          value={defaultCard}
+          orientation='vertical'
+          className='justify-center'
+        >
           <TabsHeader
             indicatorProps={{ id: 'tab-header-suggested' }}
             className='p-2'
@@ -92,7 +99,7 @@ const SearchResults = ({
                 ref={(el) => (ref.current[index] = el)}
                 className={
                   tabHeaderId.join(' ') +
-                  ' block p-0 mb-2 last:mb-0 max-w-full w-96'
+                  ' block p-0 mb-2 last:mb-0 max-w-full md:w-96'
                 }
               >
                 <JobCard key={job.id} job={job} />
@@ -105,7 +112,7 @@ const SearchResults = ({
             />
           </TabsHeader>
           <TabsBody
-            className='w-w70'
+            className='w-w70 hidden md:block'
             animate={{
               mount: {
                 transition: {
