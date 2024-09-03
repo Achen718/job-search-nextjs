@@ -36,7 +36,7 @@ export function DefaultPagination({
   );
 
   return (
-    <div className='flex items-center gap-4 mt-4'>
+    <div className='flex items-center gap-4 mt-4 justify-around'>
       <Button
         variant='text'
         className='flex items-center gap-2'
@@ -47,20 +47,17 @@ export function DefaultPagination({
       </Button>
       <div className='flex items-center gap-2'>
         {/*map total pages props */}
-        {/* {totalPagination.map((page) => (
+        {totalPagination.map((page) => (
           <IconButton {...getItemProps(page)} key={page}>
             {page}
           </IconButton>
-        ))} */}
-        <IconButton {...getItemProps(1)}>1</IconButton>
-        <IconButton {...getItemProps(2)}>2</IconButton>
-        <IconButton {...getItemProps(3)}>3</IconButton>
+        ))}
       </div>
       <Button
         variant='text'
         className='flex items-center gap-2'
         onClick={next}
-        disabled={currentPage === 3}
+        disabled={currentPage === 3 || totalPages === 1}
       >
         Next
         <ArrowRightIcon strokeWidth={2} className='h-4 w-4' />

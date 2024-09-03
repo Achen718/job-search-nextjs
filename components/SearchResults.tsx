@@ -4,7 +4,6 @@ import {
   TabsHeader,
   TabsBody,
   Tab,
-  Button,
   TabPanel,
 } from '@material-tailwind/react';
 import JobCard from './JobCard';
@@ -32,8 +31,8 @@ const SearchResults = ({
   const [defaultCard, setDefaultCard] = useState<string | null>(null);
   const ref = useRef([]);
 
-  const fetchJobs = () => {
-    fetch(
+  const fetchJobs = async () => {
+    await fetch(
       `/api/jobs?jobTitle=${jobTitle}&jobLocation=${jobLocation}&page=${currentPage}`
     )
       .then((res) => res.json())
@@ -44,13 +43,13 @@ const SearchResults = ({
       });
   };
 
+  useEffect(() => {
+    fetchJobs();
+  }, [currentPage, jobTitle, jobLocation]);
+
   const pagehandler = (page: number) => {
     setCurrentPage(page);
   };
-
-  useEffect(() => {
-    fetchJobs();
-  }, [currentPage]);
 
   useEffect(() => {
     if (jobs.length > 0) {
