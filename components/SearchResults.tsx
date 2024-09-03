@@ -55,20 +55,16 @@ const SearchResults = ({
     if (jobs.length > 0) {
       setDefaultCard(jobs[0].id);
     }
+    if (jobs.length === 0) {
+      setDefaultCard(null);
+    }
   }, [jobs]);
 
   useEffect(() => {
-    if (ref.current.length > 0) {
+    if (ref.current.length > 0 && jobs.length > 0) {
       ref.current[0].click();
     }
   }, [defaultCard]);
-
-  // const handleTabClick = (tabId: string) => {
-  //   const tabElement = document.getElementById(tabId);
-  //   if (tabElement) {
-  //     tabElement.click();
-  //   }
-  // };
 
   // Todo: Set default card on pagination updates
   // const defaultCard = jobs && jobs.length > 0 ? jobs[0].id : null;
@@ -133,7 +129,7 @@ const SearchResults = ({
         </Tabs>
       ) : (
         <div className='text-center text-blue-500 m-2 p-8'>
-          <p>No jobs found</p>
+          <p>No jobs found.</p>
         </div>
       )}
     </section>
