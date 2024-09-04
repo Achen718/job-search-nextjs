@@ -2,25 +2,14 @@ import SearchResults from '../../components/SearchResults';
 import { prisma } from '@/lib/prisma';
 import JobStoreProvider from '../StoreProvider';
 import SearchForm from '@/components/SearchForm';
+import getJobCount from '@/app/actions/getJobCount';
 
 const JobsPage = async ({
   searchParams: { jobTitle, jobLocation, page = 1 },
 }: {
   searchParams: { jobTitle: string; jobLocation: string; page: number };
 }) => {
-  // todo: Add jobs via api route
-  const totalItems = await prisma.jobPosting.count({
-    where: {
-      title: {
-        contains: jobTitle,
-        mode: 'insensitive',
-      },
-      location: {
-        contains: jobLocation,
-        mode: 'insensitive',
-      },
-    },
-  });
+  const totalItems = await getJobCount(jobTitle, jobLocation);
 
   return (
     <section>

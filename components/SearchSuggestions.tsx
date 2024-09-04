@@ -29,7 +29,7 @@ const SearchSuggestions = () => {
     '[&_#tab-header-suggested]:ring-blue-500',
     '[&_#tab-header-suggested]:rounded-xl',
   ];
-  // todo: Optional, add server action to fetch suggested jobs from prisma
+  // todo: Optional, add server action to fetch suggested jobs
   useEffect(() => {
     const fetchRecentSearch = async () => {
       if (recentlySearched) {
