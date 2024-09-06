@@ -1,4 +1,3 @@
-'use client';
 import { Card, CardBody, Typography } from '@material-tailwind/react';
 import { JobProps } from '@/types/jobTypes';
 import Link from 'next/link';

@@ -1,4 +1,3 @@
-'use client';
 import { JobProps } from '@/types/jobTypes';
 import { Typography } from '@material-tailwind/react';
 

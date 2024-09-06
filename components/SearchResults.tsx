@@ -9,7 +9,7 @@ import {
 import JobCard from './JobCard';
 import JobDetails from './JobDetails';
 import { JobType } from '@/types/jobTypes';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { DefaultPagination } from './Pagination';
 
 interface paramProps {
@@ -29,7 +29,7 @@ const SearchResults = ({
   const [currentPage, setCurrentPage] = useState(page);
   const [totalPages, setTotalPages] = useState(0);
   const [defaultCard, setDefaultCard] = useState<string | null>(null);
-  const ref = useRef([]);
+  const ref = useRef<(HTMLElement | null)[]>([]);
 
   const fetchJobs = async () => {
     await fetch(
@@ -47,28 +47,31 @@ const SearchResults = ({
     fetchJobs();
   }, [currentPage, jobTitle, jobLocation]);
 
-  const pagehandler = (page: number) => {
+  const pagehandler = useCallback((page: number) => {
     setCurrentPage(page);
-  };
+  }, []);
 
   useEffect(() => {
     if (jobs.length > 0) {
       setDefaultCard(jobs[0].id);
-    }
-    if (jobs.length === 0) {
+    } else {
       setDefaultCard(null);
     }
   }, [jobs]);
 
   useEffect(() => {
     if (ref.current.length > 0 && jobs.length > 0) {
-      ref.current[0].click();
+      (ref.current[0] as HTMLElement).click();
     }
   }, [defaultCard]);
 
-  // Todo: Set default card on pagination updates
-  // const defaultCard = jobs && jobs.length > 0 ? jobs[0].id : null;
-  // tab header classnames
+  const filteredJobs = useMemo(() => {
+    return jobs.filter(
+      (job) =>
+        job.title.includes(jobTitle) && job.location.includes(jobLocation)
+    );
+  }, [jobs, jobTitle, jobLocation]);
+
   const tabHeaderId = [
     '[&_#tab-header-suggested]:!translate-x-0',
     '[&_#tab-header-suggested]:bg-transparent',
@@ -92,7 +95,7 @@ const SearchResults = ({
             indicatorProps={{ id: 'tab-header-suggested' }}
             className='p-2'
           >
-            {jobs.map((job, index) => (
+            {filteredJobs.map((job, index) => (
               <Tab
                 key={job.id}
                 value={job.id}
@@ -126,9 +129,8 @@ const SearchResults = ({
               },
             }}
           >
-            {jobs.map((job) => (
+            {filteredJobs.map((job) => (
               <TabPanel key={job.id} value={job.id} className='tab-panel pt-2'>
-                {/* update job card details */}
                 <JobDetails key={job.id} job={job} />
               </TabPanel>
             ))}
