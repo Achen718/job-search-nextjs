@@ -21,13 +21,15 @@ export function DefaultPagination({
     } as any);
 
   const next = () => {
-    if (currentPage === 3) return;
-    pagehandler(currentPage + 1);
+    if (currentPage < totalPages) {
+      pagehandler(currentPage + 1);
+    }
   };
 
   const prev = () => {
-    if (currentPage === 1) return;
-    pagehandler(currentPage - 1);
+    if (currentPage > 1) {
+      pagehandler(currentPage - 1);
+    }
   };
 
   const totalPagination = Array.from(
@@ -46,7 +48,6 @@ export function DefaultPagination({
         <ArrowLeftIcon strokeWidth={2} className='h-4 w-4' /> Prev
       </Button>
       <div className='flex items-center gap-2'>
-        {/*map total pages props */}
         {totalPagination.map((page) => (
           <IconButton {...getItemProps(page)} key={page}>
             {page}
@@ -57,7 +58,7 @@ export function DefaultPagination({
         variant='text'
         className='flex items-center gap-2'
         onClick={next}
-        disabled={currentPage === 3 || totalPages === 1}
+        disabled={currentPage === totalPages}
       >
         Next
         <ArrowRightIcon strokeWidth={2} className='h-4 w-4' />

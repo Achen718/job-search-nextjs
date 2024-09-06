@@ -4,9 +4,9 @@ import JobStoreProvider from '../StoreProvider';
 import SearchForm from '@/components/SearchForm';
 
 const JobsPage = async ({
-  searchParams: { jobTitle, jobLocation, page = 1 },
+  searchParams: { jobTitle, jobLocation },
 }: {
-  searchParams: { jobTitle: string; jobLocation: string; page: number };
+  searchParams: { jobTitle: string; jobLocation: string };
 }) => {
   const totalItems = await prisma.jobPosting.count({
     where: {
@@ -29,7 +29,6 @@ const JobsPage = async ({
           <SearchResults
             jobTitle={jobTitle}
             jobLocation={jobLocation}
-            page={page}
             totalItems={totalItems}
           />
         </JobStoreProvider>

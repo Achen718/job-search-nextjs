@@ -9,24 +9,32 @@ import {
 import JobCard from './JobCard';
 import JobDetails from './JobDetails';
 import { JobType } from '@/types/jobTypes';
-import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import {
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  Suspense,
+} from 'react';
 import { DefaultPagination } from './Pagination';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { RootState } from '@/lib/store';
+import { setCurrentPage } from '@/lib/features/pagination/paginationSlice';
 
 interface paramProps {
   jobTitle: string;
   jobLocation: string;
-  page: number;
   totalItems: number;
 }
 
-const SearchResults = ({
-  jobTitle,
-  jobLocation,
-  page,
-  totalItems,
-}: paramProps) => {
+const SearchResults = ({ jobTitle, jobLocation, totalItems }: paramProps) => {
+  const dispatch = useAppDispatch();
+  const currentPage = useAppSelector(
+    (state: RootState) => state.pagination.currentPage
+  );
+
   const [jobs, setJobs] = useState<JobType[]>([]);
-  const [currentPage, setCurrentPage] = useState(page);
   const [totalPages, setTotalPages] = useState(0);
   const [defaultCard, setDefaultCard] = useState<string | null>(null);
   const ref = useRef<(HTMLElement | null)[]>([]);
@@ -47,9 +55,12 @@ const SearchResults = ({
     fetchJobs();
   }, [currentPage, jobTitle, jobLocation]);
 
-  const pagehandler = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
+  const pagehandler = useCallback(
+    (page: number) => {
+      dispatch(setCurrentPage(page));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (jobs.length > 0) {
@@ -60,8 +71,9 @@ const SearchResults = ({
   }, [jobs]);
 
   useEffect(() => {
+    console.log(ref.current);
     if (ref.current.length > 0 && jobs.length > 0) {
-      (ref.current[0] as HTMLElement).click();
+      ref.current[0].click();
     }
   }, [defaultCard]);
 

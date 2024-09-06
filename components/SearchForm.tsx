@@ -1,6 +1,6 @@
 'use client';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@material-tailwind/react';
 import {
@@ -9,6 +9,7 @@ import {
   addSearch,
 } from '../lib/features/recentSearches/recentSearchSlice';
 import { useAppDispatch } from '@/lib/hooks';
+import { resetCurrentPage } from '../lib/features/pagination/paginationSlice';
 
 interface SearchInput {
   jobTitle: string;
@@ -40,6 +41,7 @@ const SearchForm = () => {
     dispatch(setJobTitle(jobTitle));
     dispatch(setJobLocation(jobLocation));
     dispatch(addSearch({ jobTitle, jobLocation }));
+    dispatch(resetCurrentPage()); // Reset the page to 1
   });
 
   return (

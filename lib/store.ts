@@ -3,10 +3,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import recentSearchSlice from './features/recentSearches/recentSearchSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from './storage';
+import paginationReducer from './features/pagination/paginationSlice';
 // import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
   recentSearch: recentSearchSlice,
+  pagination: paginationReducer,
 });
 
 const persistConfig = {
@@ -20,7 +22,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const makeConfiguredStore = () =>
   configureStore({
     reducer: {
-      recentSearch: persistedReducer,
+      pagination: paginationReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
