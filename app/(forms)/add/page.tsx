@@ -31,8 +31,6 @@ const CreateJobForm = () => {
       const res = await edgestore.publicFiles.upload({
         file,
       });
-      // you can run some server action or api here
-      // to add the necessary data to your database
       setValue('img', res.url);
     }
   };

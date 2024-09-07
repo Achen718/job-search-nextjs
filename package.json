@@ -18,6 +18,7 @@
     "@material-tailwind/react": "^2.1.9",
     "@prisma/client": "^5.18.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@vercel/postgres": "^0.10.0",
     "clsx": "^2.1.1",
     "next": "14.2.5",
     "puppeteer": "^23.1.0",
